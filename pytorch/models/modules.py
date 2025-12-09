@@ -55,7 +55,7 @@ class PyramidModule(nn.Module):
         self.conv_2 = ConvBlock(in_planes, middle_planes, kernel_size=1)
         self.conv_3 = ConvBlock(in_planes, middle_planes, kernel_size=1)
         self.conv_4 = ConvBlock(in_planes, middle_planes, kernel_size=1)
-        self.upsample = torch.nn.Upsample(size=(scales[0] * options.height // options.width, scales[0]), mode='bilinear')
+        self.upsample = torch.nn.Upsample(size=(scales[0] * options.height // options.width, scales[0]), mode='bilinear', align_corners=False)
         return
     
     def forward(self, inp):

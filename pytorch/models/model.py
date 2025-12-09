@@ -6,12 +6,13 @@ class Model(nn.Module):
     def __init__(self, options):
         super(Model, self).__init__()
         
-        self.options = options        
-        self.drn = drn_d_54(pretrained=True, out_map=32, num_classes=-1, out_middle=False)
+        self.options = options
+        use_pretrained = getattr(options, 'pretrained', 1) == 1
+        self.drn = drn_d_54(pretrained=use_pretrained, out_map=32, num_classes=-1, out_middle=False)
         self.pyramid = PyramidModule(options, 512, 128)
         self.feature_conv = ConvBlock(1024, 512)
         self.segmentation_pred = nn.Conv2d(512, NUM_CORNERS + NUM_ICONS + 2 + NUM_ROOMS + 2, kernel_size=1)
-        self.upsample = torch.nn.Upsample(size=(options.height, options.width), mode='bilinear')
+        self.upsample = torch.nn.Upsample(size=(options.height, options.width), mode='bilinear', align_corners=False)
         return
 
     def forward(self, inp):

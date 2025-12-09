@@ -16,11 +16,9 @@ from IP import reconstructFloorplan
 
 def main(options):
     if not os.path.exists(options.checkpoint_dir):
-        os.system("mkdir -p %s"%options.checkpoint_dir)
-        pass
+        os.makedirs(options.checkpoint_dir, exist_ok=True)
     if not os.path.exists(options.test_dir):
-        os.system("mkdir -p %s"%options.test_dir)
-        pass
+        os.makedirs(options.test_dir, exist_ok=True)
 
     dataset = FloorplanDataset(options, split='train', random=True)
 
@@ -34,8 +32,7 @@ def main(options):
 
     if options.restore == 1:
         print('restore')
-        model.load_state_dict(torch.load(options.checkpoint_dir + '/checkpoint.pth'))
-        pass
+        model.load_state_dict(torch.load(options.checkpoint_dir + '/checkpoint.pth', weights_only=True))
 
     
     if options.task == 'test':
@@ -45,8 +42,7 @@ def main(options):
     
     optimizer = torch.optim.Adam(model.parameters(), lr = options.LR)
     if options.restore == 1 and os.path.exists(options.checkpoint_dir + '/optim.pth'):
-        optimizer.load_state_dict(torch.load(options.checkpoint_dir + '/optim.pth'))
-        pass
+        optimizer.load_state_dict(torch.load(options.checkpoint_dir + '/optim.pth', weights_only=True))
 
     for epoch in range(options.numEpochs):
         epoch_losses = []

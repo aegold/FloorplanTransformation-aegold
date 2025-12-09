@@ -172,6 +172,10 @@ def loadLabelMap():
         labelMap[room] = ('rooms', label)
         continue
     labelMap['door'] = 8
+    # Add additional labels that may appear in data
+    labelMap['point'] = ('icons', 0)  # Unknown point type
+    labelMap['window'] = ('icons', 0)  # Window as icon
+    labelMap['wall'] = 8  # Wall as door type for compatibility
     return labelMap
 
 def augmentSample(options, image, background_colors=[], split='train'):

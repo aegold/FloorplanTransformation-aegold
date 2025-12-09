@@ -113,7 +113,7 @@ def drawWallMask(walls, width, height, thickness=3, indexed=False):
         for wall in walls:
             cv2.line(wallMask, (int(wall[0][0]), int(wall[0][1])), (int(wall[1][0]), int(wall[1][1])), color=1, thickness=thickness)
             continue
-        wallMask = wallMask.astype(np.bool)
+        wallMask = wallMask.astype(bool)
         pass
     return wallMask
 

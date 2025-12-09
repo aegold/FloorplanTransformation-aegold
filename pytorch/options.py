@@ -78,7 +78,10 @@ def parse_args():
                         default='', type=str)    
     parser.add_argument('--suffix', dest='suffix',
                         help='suffix to distinguish experiments',
-                        default='', type=str)    
+                        default='', type=str)
+    parser.add_argument('--pretrained', dest='pretrained',
+                        help='use pretrained DRN backbone (0=no, 1=yes)',
+                        default=1, type=int)
     
     args = parser.parse_args()
     return args
